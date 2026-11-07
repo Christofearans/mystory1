@@ -1,202 +1,2636 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tebogo Mogale's Life Story</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.6;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mary — An Honest Invitation</title>
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
 
-        h1, h2 {
-            text-align: center;
-            color: #444;
-        }
+  <!-- Real Text PDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-        img {
-            max-width: 100%; /* Ensure image scales down on smaller screens */
-            height: auto;
-            border-radius: 8px;
-            margin: 20px auto;
-            display: block; /* Center the image */
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
-        }
+  <style>
+    :root {
+      --midnight: #050816;
+      --deep: #090d24;
+      --violet: #1a0b2e;
+      --plum: #2a1042;
+      --gold: #d4af37;
+      --soft-gold: #f4d58d;
+      --rose: #ff8fa3;
+      --ice: #dff7ff;
+      --white: #fffafc;
+      --glass: rgba(255, 255, 255, 0.06);
+      --glass-strong: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.12);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+      --glow-gold: 0 0 24px rgba(212, 175, 55, 0.22);
+      --glow-rose: 0 0 24px rgba(255, 143, 163, 0.22);
+    }
 
-        p {
-            margin-bottom: 10px; /* Reduced spacing between paragraphs */
-            text-align: justify;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        blockquote {
-            background: #f9f9f9;
-            border-left: 4px solid #ccc;
-            margin: 1.5em 10px;
-            padding: 0.5em 10px;
-            quotes: "\201C""\201D""\2018""\2019";
-        }
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
 
-        blockquote:before {
-            color: #ccc;
-            content: open-quote;
-            font-size: 4em;
-            line-height: 0.1em;
-            margin-right: 0.25em;
-            vertical-align: -0.4em;
-        }
+    body {
+      font-family: "Inter", sans-serif;
+      color: var(--white);
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(157, 78, 221, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(255, 143, 163, 0.14), transparent 24%),
+        radial-gradient(circle at center, rgba(212, 175, 55, 0.08), transparent 22%),
+        linear-gradient(135deg, var(--midnight), var(--deep) 45%, var(--violet));
+      position: relative;
+    }
 
-        blockquote p {
-            display: inline;
-        }
+    canvas#ambient,
+    canvas#fx {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #666;
-        }
+    .page-wrapper {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 34px 18px calc(130px + env(safe-area-inset-bottom));
+    }
 
-        .whatsapp-contact {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 16px;
-            color: #25D366; /* WhatsApp green color */
-        }
+    .container {
+      width: min(980px, 100%);
+    }
 
-        .whatsapp-contact a {
-            color: #25D366;
-            text-decoration: none;
-        }
+    .scene {
+      display: none;
+    }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px; /* Reduce padding for smaller screens */
-            }
+    .scene.active {
+      display: block;
+      animation: sceneIn 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
 
-            h1 {
-                font-size: 24px; /* Adjust heading size for smaller screens */
-            }
+    .card {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 28px;
+      padding: 44px;
+      box-shadow: var(--shadow), var(--glow-gold);
+      overflow: hidden;
+    }
 
-            h2 {
-                font-size: 20px; /* Adjust subheading size for smaller screens */
-            }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(
+        120deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.08) 40%,
+        transparent 60%
+      );
+      transform: translateX(-100%);
+      animation: shine 7s infinite;
+      pointer-events: none;
+    }
 
-            img {
-                max-width: 80%; /* Make the image slightly smaller on mobile */
-            }
+    .eyebrow {
+      display: inline-block;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--soft-gold);
+      font-size: 0.82rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
 
-            blockquote {
-                font-size: 14px; /* Reduce quote font size for readability */
-            }
-        }
+    h1,
+    h2,
+    h3 {
+      line-height: 1.08;
+    }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 22px; /* Further reduce heading size for very small screens */
-            }
+    h1 {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(3rem, 8vw, 5.8rem);
+      color: var(--white);
+      text-shadow: 0 0 28px rgba(255, 143, 163, 0.25);
+      margin-bottom: 16px;
+    }
 
-            h2 {
-                font-size: 18px; /* Further reduce subheading size */
-            }
+    h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: var(--soft-gold);
+      margin-bottom: 18px;
+    }
 
-            img {
-                max-width: 90%; /* Make the image larger relative to the screen */
-            }
+    h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.45rem;
+      color: var(--rose);
+      margin-bottom: 12px;
+    }
 
-            blockquote {
-                font-size: 13px; /* Further reduce quote font size */
-            }
-        }
-    </style>
+    p {
+      font-size: 1.02rem;
+      line-height: 1.85;
+      color: rgba(255, 250, 252, 0.88);
+      margin-bottom: 16px;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .soft {
+      opacity: 0.84;
+    }
+
+    .gold-line {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .tiny-note {
+      font-size: 0.88rem;
+      opacity: 0.72;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.18),
+        transparent
+      );
+      margin: 26px 0;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 15px 28px;
+      border-radius: 999px;
+      font-family: "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+      transition: 0.25s ease;
+      color: #1b1006;
+      background: linear-gradient(135deg, var(--soft-gold), var(--gold));
+      box-shadow: 0 14px 30px rgba(212, 175, 55, 0.2);
+      touch-action: manipulation;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 18px 36px rgba(212, 175, 55, 0.28);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn.rose {
+      color: white;
+      background: linear-gradient(135deg, #ff6b8b, #c9184a);
+      box-shadow: 0 14px 30px rgba(255, 107, 139, 0.2);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      color: var(--white);
+    }
+
+    .btn.ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    #distanceNext:not(:disabled),
+    #promiseNext:not(:disabled),
+    #warmthNext:not(:disabled),
+    #futureNext:not(:disabled) {
+      animation: nextGlow 1.8s ease-in-out infinite;
+    }
+
+    @keyframes nextGlow {
+      0%,
+      100% {
+        box-shadow: 0 14px 30px rgba(212, 175, 55, 0.2);
+      }
+      50% {
+        box-shadow: 0 18px 40px rgba(212, 175, 55, 0.35),
+          0 0 20px rgba(255, 143, 163, 0.18);
+      }
+    }
+
+    .progress-wrap {
+      margin: 26px 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      color: var(--soft-gold);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--rose), var(--ice));
+      border-radius: 999px;
+      transition: width 0.45s ease;
+      box-shadow: 0 0 18px rgba(255, 143, 163, 0.28);
+    }
+
+    /* Envelope */
+    .envelope-wrap {
+      margin: 34px auto 10px;
+      perspective: 1200px;
+    }
+
+    .envelope {
+      position: relative;
+      width: min(390px, 92%);
+      height: 260px;
+      margin: 0 auto;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      touch-action: manipulation;
+    }
+
+    .env-body {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1b1030, #2a1545 55%, #120b22);
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), inset 0 0 30px rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .env-letter {
+      position: absolute;
+      left: 9%;
+      right: 9%;
+      top: 18%;
+      height: 70%;
+      background: linear-gradient(180deg, #fffdf7, #f8efe3);
+      color: #2a1a10;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Great Vibes", cursive;
+      font-size: 2.4rem;
+      z-index: 1;
+      transition: transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .env-front {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 66%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border-radius: 0 0 20px 20px;
+      z-index: 2;
+      backdrop-filter: blur(2px);
+    }
+
+    .env-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 56%;
+      background: linear-gradient(160deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05));
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 3;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .seal {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      transform: translate(-50%, -50%);
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ff9db0, #c9184a 60%, #7a0025);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      z-index: 4;
+      box-shadow: 0 12px 24px rgba(201, 24, 74, 0.35), inset 0 0 18px rgba(255,255,255,0.18);
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      transition: 0.45s ease;
+    }
+
+    .envelope:not(.opened) .seal {
+      animation: sealPulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes sealPulse {
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 0 12px 24px rgba(201, 24, 74, 0.35),
+          inset 0 0 18px rgba(255, 255, 255, 0.18);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.07);
+        box-shadow: 0 16px 34px rgba(201, 24, 74, 0.45),
+          inset 0 0 22px rgba(255, 255, 255, 0.22);
+      }
+    }
+
+    .envelope.opened .env-flap {
+      transform: rotateX(-180deg);
+    }
+
+    .envelope.opened .env-letter {
+      transform: translateY(-92px);
+    }
+
+    .envelope.opened .seal {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.35) rotate(90deg);
+      pointer-events: none;
+    }
+
+    .tap-note {
+      margin-top: 16px;
+      color: rgba(255, 250, 252, 0.68);
+      font-size: 0.95rem;
+      letter-spacing: 0.4px;
+    }
+
+    /* Distance */
+    .distance-stage {
+      position: relative;
+      height: 190px;
+      margin: 28px 0;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.16), transparent 18%),
+        radial-gradient(circle at 85% 50%, rgba(255, 143, 163, 0.16), transparent 18%),
+        rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .distance-line {
+      position: absolute;
+      top: 50%;
+      left: 18%;
+      right: 18%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), rgba(255,255,255,0.18), var(--rose));
+      transform: translateY(-50%);
+      transition: all 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .dot {
+      position: absolute;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: left 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 0 20px currentColor;
+    }
+
+    .dot.you {
+      left: 18%;
+      background: var(--gold);
+      color: var(--gold);
+    }
+
+    .dot.mary {
+      left: 82%;
+      background: var(--rose);
+      color: var(--rose);
+    }
+
+    .dot-label {
+      position: absolute;
+      top: 62%;
+      transform: translateX(-50%);
+      font-size: 0.88rem;
+      color: rgba(255, 250, 252, 0.78);
+      transition: left 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .dot-label.you-label { left: 18%; }
+    .dot-label.mary-label { left: 82%; }
+
+    .miles-text {
+      position: absolute;
+      top: 26%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--soft-gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      transition: 0.6s ease;
+      text-align: center;
+      width: 80%;
+    }
+
+    .distance-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .option-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 24px;
+      cursor: pointer;
+      transition: 0.25s ease;
+      touch-action: manipulation;
+    }
+
+    .option-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .option-card:active {
+      transform: scale(0.98);
+    }
+
+    .option-card.selected {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.12);
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.16);
+    }
+
+    .option-card.selected::after,
+    .date-card.selected::after {
+      content: "✓";
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #1b1006;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 18px rgba(212, 175, 55, 0.25);
+    }
+
+    .option-card .emoji {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .option-card .title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .option-card .desc {
+      font-size: 0.92rem;
+      color: rgba(255, 250, 252, 0.75);
+      line-height: 1.65;
+    }
+
+    .distance-message {
+      margin-top: 18px;
+      min-height: 58px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      color: var(--soft-gold);
+      font-style: italic;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* Promise Cards */
+    .promise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .promise-card {
+      height: 230px;
+      cursor: pointer;
+      perspective: 1000px;
+      touch-action: manipulation;
+    }
+
+    .promise-card:active {
+      transform: scale(0.98);
+    }
+
+    .promise-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .promise-card.revealed .promise-inner {
+      transform: rotateY(180deg);
+    }
+
+    .promise-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 20px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .promise-face.front .icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .promise-face.front .title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.35rem;
+      color: var(--soft-gold);
+    }
+
+    .promise-face.back {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(255,143,163,0.12));
+      color: var(--white);
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
+
+    /* Warmth */
+    .warmth-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .warmth-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 22px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.25s ease;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .warmth-btn:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 143, 163, 0.35);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
+    }
+
+    .warmth-btn:active {
+      transform: scale(0.98);
+    }
+
+    .warmth-btn .icon {
+      font-size: 2.35rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .warmth-btn .label {
+      font-size: 0.94rem;
+      color: var(--white);
+      opacity: 0.9;
+    }
+
+    .feeling-box {
+      min-height: 68px;
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      color: var(--soft-gold);
+      font-style: italic;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* Future Choices */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .date-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 24px;
+      cursor: pointer;
+      transition: 0.25s ease;
+      touch-action: manipulation;
+    }
+
+    .date-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .date-card:active {
+      transform: scale(0.98);
+    }
+
+    .date-card.selected {
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.12);
+      box-shadow: 0 0 24px rgba(212, 175, 55, 0.16);
+    }
+
+    .date-card .emoji {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .date-card .title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .date-card .desc {
+      font-size: 0.92rem;
+      color: rgba(255, 250, 252, 0.75);
+      line-height: 1.65;
+    }
+
+    /* Questions */
+    .question-block {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--rose);
+      font-weight: 500;
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 115px;
+      resize: vertical;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--white);
+      font-family: "Inter", sans-serif;
+      font-size: 0.98rem;
+      line-height: 1.65;
+      outline: none;
+      transition: 0.25s ease;
+    }
+
+    textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 18px rgba(212, 175, 55, 0.14);
+      background: rgba(0, 0, 0, 0.26);
+    }
+
+    /* Ask */
+    .ask-box {
+      margin-top: 18px;
+      padding: 34px;
+      border-radius: 24px;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 143, 163, 0.12),
+        rgba(212, 175, 55, 0.1),
+        rgba(157, 78, 221, 0.1)
+      );
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-align: center;
+    }
+
+    .ask-title {
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(2.5rem, 7vw, 4.6rem);
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .status-note {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--soft-gold);
+      display: none;
+      line-height: 1.7;
+    }
+
+    /* Summary */
+    .summary-panel {
+      margin-top: 24px;
+      padding: 24px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+
+    .summary-item {
+      margin-bottom: 16px;
+    }
+
+    .summary-item strong {
+      color: var(--rose);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .summary-item span {
+      color: rgba(255, 250, 252, 0.88);
+      line-height: 1.65;
+      display: block;
+      white-space: pre-wrap;
+    }
+
+    /* Dots */
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 26px;
+      flex-wrap: wrap;
+    }
+
+    .dot-progress {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      transition: 0.25s ease;
+    }
+
+    .dot-progress.active {
+      background: var(--gold);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.5);
+      transform: scale(1.2);
+    }
+
+    /* Floating Emoji */
+    .floating-emoji {
+      position: fixed;
+      font-size: 2rem;
+      pointer-events: none;
+      z-index: 999;
+      animation: floatAway 1.8s ease-out forwards;
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+    }
+
+    @keyframes floatAway {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.8) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -180px) scale(1.45) rotate(18deg);
+      }
+    }
+
+    @keyframes sceneIn {
+      from {
+        opacity: 0;
+        transform: translateY(26px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%);
+      }
+      60%,
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Mobile Hint */
+    .mobile-hint {
+      position: fixed;
+      left: 50%;
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      width: min(92vw, 540px);
+      padding: 13px 18px;
+      border-radius: 999px;
+      background: rgba(5, 8, 22, 0.86);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--soft-gold);
+      font-size: 0.93rem;
+      line-height: 1.45;
+      text-align: center;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.38);
+      z-index: 60;
+      pointer-events: none;
+      white-space: normal;
+    }
+
+    @media (max-width: 768px) {
+      .page-wrapper {
+        padding: 22px 12px calc(135px + env(safe-area-inset-bottom));
+      }
+
+      .card {
+        padding: 28px 18px;
+        border-radius: 24px;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 12vw, 4rem);
+      }
+
+      h2 {
+        font-size: clamp(1.7rem, 8vw, 2.6rem);
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        font-size: 0.97rem;
+        line-height: 1.75;
+      }
+
+      .btn-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .distance-stage {
+        height: 170px;
+        border-radius: 18px;
+      }
+
+      .miles-text {
+        font-size: 1rem;
+        width: 88%;
+        top: 22%;
+      }
+
+      .dot-label {
+        font-size: 0.78rem;
+      }
+
+      .option-card,
+      .date-card {
+        padding: 18px 16px;
+      }
+
+      .option-card .title,
+      .date-card .title {
+        font-size: 1.08rem;
+      }
+
+      .option-card .desc,
+      .date-card .desc {
+        font-size: 0.88rem;
+      }
+
+      .promise-card {
+        height: 215px;
+      }
+
+      .promise-face {
+        padding: 18px;
+      }
+
+      .promise-face.back {
+        font-size: 0.9rem;
+      }
+
+      .warmth-grid {
+        grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+        gap: 10px;
+      }
+
+      .warmth-btn {
+        padding: 16px 8px;
+        min-height: 88px;
+      }
+
+      .warmth-btn .icon {
+        font-size: 1.9rem;
+      }
+
+      .warmth-btn .label {
+        font-size: 0.8rem;
+      }
+
+      textarea {
+        font-size: 16px;
+        min-height: 125px;
+      }
+
+      .ask-box {
+        padding: 24px 18px;
+      }
+
+      .summary-panel {
+        padding: 18px;
+      }
+
+      .dots {
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .card {
+        padding: 24px 16px;
+      }
+
+      .envelope {
+        height: 220px;
+      }
+
+      .env-letter {
+        font-size: 2rem;
+        top: 16%;
+        height: 72%;
+      }
+
+      .seal {
+        width: 66px;
+        height: 66px;
+        font-size: 1.6rem;
+      }
+
+      .distance-stage {
+        height: 155px;
+      }
+
+      .mobile-hint {
+        font-size: 0.88rem;
+        padding: 12px 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
- 
 <body>
+  <!-- Ambient Particles -->
+  <canvas id="ambient"></canvas>
+
+  <!-- Fireworks / Effects Overlay -->
+  <canvas id="fx"></canvas>
+
+  <div class="page-wrapper">
     <div class="container">
-        <h1>Tebogo Mogale's Journey</h1>
 
-        <p>
-            My name is Tebogo Mogale, and I matriculated from Mohumi Secondary School. I’m currently in my third year of studying BEngTech Electrical Engineering at Tshwane University of Technology (TUT). My journey into engineering was inspired by my mentor, Mr. Makwela NN, who pursued a BEngTech Mechanical Engineering degree at the University of Johannesburg (UJ).
-        </p>
+      <!-- SCENE 1: ENVELOPE -->
+      <section class="scene active" id="intro">
+        <div class="card center">
+          <div class="eyebrow">For Mary — With Honesty</div>
+          <h1>An Honest Invitation</h1>
+          <p class="soft">
+            I didn’t want to ask you in a careless way.
+          </p>
+          <p class="soft">
+            Because what we have — and what I still feel — deserves more than that.
+          </p>
 
-        <h2>Early Life and Challenges</h2>
-        <p>
-            I was raised by my grandparents after losing my mother at a young age, as my father was never present in my life. Growing up, their support and values shaped my resilience and determination. My academic journey has been anything but straightforward. In Grade 8, I excelled in Mathematics, Natural Sciences, and Technology. However, things took a turn when I switched schools to join friends whose goals didn't align with mine. This decision led to a decline in my performance, teaching me a valuable lesson about peer influence and staying true to my aspirations.
-        </p>
+          <div class="envelope-wrap">
+            <div class="envelope" id="envelope" onclick="openEnvelope()">
+              <div class="env-body"></div>
+              <div class="env-letter">Mary</div>
+              <div class="env-front"></div>
+              <div class="env-flap"></div>
+              <div class="seal">❤</div>
+            </div>
+          </div>
 
-        <p>
-            In 2021, during my matric year, I faced another hurdle—a hospitalization for appendix surgery which disrupted my studies. Despite these challenges, I managed to pass with a diploma, though I wasn’t satisfied with my results. Toward the end of the year, my Mathematics teacher, Mr. Kgatla, recognized my potential and gave me the opportunity to teach Financial Mathematics to my classmates. That experience ignited my passion for sharing knowledge and empowering others.
-        </p>
-
-        <blockquote>
-            <p>
-                "Not having both parents around could have easily become an obstacle for me, as it has for many others. However, I chose not to let it define or limit my potential."
-            </p>
-        </blockquote>
-
-        <h2>Repeating Matric and Discovering Tutoring</h2>
-        <p>
-            I chose to repeat matric in 2022 because my initial results didn’t meet the requirements for the Electrical Engineering course I wanted to pursue. Additionally, I had personal reasons that made this decision necessary. Repeating matric turned out to be a blessing in disguise—it allowed me to prove to myself that I could achieve excellence. During this time, I discovered my love for tutoring when my teachers entrusted me with teaching Science subjects to my peers and assisting lower grades in Mathematics and Physical Sciences.
-        </p>
-
-        <p>
-            I passed my second matric attempt with flying colors, achieving Level 6 in all subjects except English, where I scored 68%. This success reaffirmed my belief in hard work and perseverance.
-        </p>
-
-        <h2>Inspiration from DK Lekola Global Education Institute</h2>
-        <p>
-            In 2023, during my first year at university, I discovered DK Lekola Global Education Institute, an organization dedicated to empowering students through education, career guidance, and resources. Their mission resonated deeply with me—they brought together students from different provinces, provided study materials, assisted with university applications, and offered mentorship. Inspired by their work, I reached out to them when I thought I might be defunded by NSFAS. DK Lekola connected me with learners who needed tutoring, allowing me to earn money to support myself while continuing my education. This experience deepened my appreciation for mentorship and the transformative power of education.
-        </p>
-
-        <h2>Co-Founding Infinity Academy</h2>
-        <p>
-            Inspired by my experiences and DK Lekola Global Education Institute, I co-founded Infinity Academy with Mr. Makwela NN in 2023. Together, we tutored students from various schools, helping them secure spots in universities and colleges across different provinces. One of our proudest achievements was securing a distinction in Mathematics for one of our students.
-        </p>
-
-        <p>
-            In 2024, I expanded my reach by becoming a private tutor for Statistics and Probability at my university. Through dedication and tailored support, I achieved a 100% pass rate among my students and produced several distinctions. Beyond academics, Infinity Academy holds immense personal significance for me. Having lost my mother and grown up without my father, I couldn’t always celebrate my achievements the way I wanted to. However, seeing the students we help make their parents proud brings me immense joy and fulfillment.
-        </p>
-
-        <!-- Picture with Shadow -->
-        <img src="WhatsApp Image 2025-02-17 at 09.44.13_056c3134.jpg" alt="Tebogo Mogale">
-
-        <h2>Advice to Students</h2>
-        <ul>
-            <li>Step out of your comfort zone and challenge yourself daily.</li>
-            <li>Believe in yourself and recognize that you are capable of achieving greatness.</li>
-            <li>Choose friends who inspire and push you toward your goals.</li>
-            <li>Your situation, what you lack, where you sleep, and what you eat should be your greatest motivator. You don’t necessarily need external motivation to start working. Let your circumstances drive you to take action because you know what you want to change and achieve.</li>
-        </ul>
-
-        <h2>Future Aspirations</h2>
-        <p>
-            My ultimate goal is to expand Infinity Academy into a well-known program that addresses educational gaps and empowers learners nationwide. I envision growing the initiative to include more subjects, mentorship opportunities, and career guidance services. By creating pathways for success, I hope to inspire young people to believe in their potential and build brighter futures for themselves and their communities.
-        </p>
-
-        <!-- WhatsApp Contact Information -->
-        <div class="whatsapp-contact">
-            <p>Connect with me on WhatsApp:</p>
-            <a href="https://wa.me/27608268288" target="_blank">+27 60 826 8288</a>
+          <div class="tap-note">👆 Tap the glowing wax seal to open the letter</div>
         </div>
+      </section>
 
-        <footer>
-            &copy; 2023 Tebogo Mogale. All rights reserved.
-        </footer>
+      <!-- SCENE 2: TRUTH -->
+      <section class="scene" id="truth">
+        <div class="card">
+          <div class="eyebrow">Chapter One</div>
+          <h2>The Truth I Want You To Know</h2>
+
+          <p>
+            Mary, we were once something real.
+          </p>
+
+          <p>
+            A lot happened. Some of it was painful. Some of it was confusing.
+            And if I’m honest — a lot of it was my fault.
+          </p>
+
+          <p>
+            I’m not here to rewrite history or pretend I didn’t make mistakes.
+            I know I hurt you. I know I made things heavier than they needed to be,
+            and I know distance did not make it easier.
+          </p>
+
+          <p>
+            I know we live far apart, and sometimes the only chances we get
+            to be close are rare and fragile.
+          </p>
+
+          <div class="divider"></div>
+
+          <p>
+            But even with all of that…
+          </p>
+
+          <p class="gold-line">
+            You remain my favorite person in this world.
+          </p>
+
+          <p>
+            Even when we don’t talk every day.
+            Even when life pulls us in different directions.
+            Even when silence sits between us.
+          </p>
+
+          <p>
+            We spoke about making things right. I remember that.
+            I’m not asking you to forget the past.
+            I’m asking for a chance to show you that I can do this differently —
+            with more honesty, more patience, and more care.
+          </p>
+
+          <div class="btn-row">
+            <button class="btn" onclick="goToScene('distance')">
+              Continue 🌙
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 3: DISTANCE -->
+      <section class="scene" id="distance">
+        <div class="card">
+          <div class="eyebrow">Chapter Two</div>
+          <h2>What Kind of Closeness Feels Right To You?</h2>
+
+          <p>
+            Distance is not just miles.
+            Sometimes it is emotional space, timing, trust, and fear of repeating pain.
+          </p>
+
+          <p>
+            So before I ask anything else, I want to understand what kind of closeness
+            would actually feel safe and real to you.
+          </p>
+
+          <div class="distance-stage">
+            <div class="distance-line" id="distanceLine"></div>
+            <div class="dot you" id="youDot"></div>
+            <div class="dot mary" id="maryDot"></div>
+            <div class="dot-label you-label" id="youLabel">T</div>
+            <div class="dot-label mary-label" id="maryLabel">Mary</div>
+            <div class="miles-text" id="milesText">👆 Tap what feels safest to you</div>
+          </div>
+
+          <div class="distance-options">
+            <div class="option-card" onclick="selectDistance(this, 'consistent')">
+              <span class="emoji">🤍</span>
+              <div class="title">Consistent but calm</div>
+              <div class="desc">
+                Regular contact, but not overwhelming. Steady, warm, and real.
+              </div>
+            </div>
+
+            <div class="option-card" onclick="selectDistance(this, 'quality')">
+              <span class="emoji">🌙</span>
+              <div class="title">Quality over quantity</div>
+              <div class="desc">
+                Less constant talking, but deeper moments when we do connect.
+              </div>
+            </div>
+
+            <div class="option-card" onclick="selectDistance(this, 'slow')">
+              <span class="emoji">🕰️</span>
+              <div class="title">Slow and careful</div>
+              <div class="desc">
+                Rebuild trust step by step, without rushing or forcing anything.
+              </div>
+            </div>
+
+            <div class="option-card" onclick="selectDistance(this, 'boundaries')">
+              <span class="emoji">🛡️</span>
+              <div class="title">Clear boundaries</div>
+              <div class="desc">
+                Respect space, no mixed signals, no games — just clarity.
+              </div>
+            </div>
+
+            <div class="option-card" onclick="selectDistance(this, 'visits')">
+              <span class="emoji">📍</span>
+              <div class="title">Make visits count</div>
+              <div class="desc">
+                Focus on making real in-person time meaningful when we get the chance.
+              </div>
+            </div>
+
+            <div class="option-card" onclick="selectDistance(this, 'youLead')">
+              <span class="emoji">🧭</span>
+              <div class="title">You lead</div>
+              <div class="desc">
+                Tell me what feels right for you, and I will listen properly.
+              </div>
+            </div>
+          </div>
+
+          <div class="distance-message" id="distanceMessage">
+            Select the kind of closeness that feels most honest to you.
+          </div>
+
+          <div class="btn-row">
+            <button class="btn" id="distanceNext" disabled onclick="goToScene('promises')">
+              Continue With This Understanding ➜
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 4: PROMISES -->
+      <section class="scene" id="promises">
+        <div class="card">
+          <div class="eyebrow">Chapter Three</div>
+          <h2>What I Want To Offer This Time</h2>
+
+          <p>
+            Not grand words. Not pressure.
+            Just intentions I am willing to carry honestly.
+          </p>
+
+          <div class="promise-grid">
+            <div class="promise-card" data-promise="accountability" onclick="togglePromise(this)">
+              <div class="promise-inner">
+                <div class="promise-face front">
+                  <div class="icon">⚖️</div>
+                  <div class="title">Accountability</div>
+                </div>
+                <div class="promise-face back">
+                  I own my part in what broke between us. I am not asking you to carry it alone.
+                </div>
+              </div>
+            </div>
+
+            <div class="promise-card" data-promise="honesty" onclick="togglePromise(this)">
+              <div class="promise-inner">
+                <div class="promise-face front">
+                  <div class="icon">🪞</div>
+                  <div class="title">Honesty</div>
+                </div>
+                <div class="promise-face back">
+                  I don’t want to hide behind charm or excuses. I want to be clear, even when it’s uncomfortable.
+                </div>
+              </div>
+            </div>
+
+            <div class="promise-card" data-promise="patience" onclick="togglePromise(this)">
+              <div class="promise-inner">
+                <div class="promise-face front">
+                  <div class="icon">🕰️</div>
+                  <div class="title">Patience</div>
+                </div>
+                <div class="promise-face back">
+                  I respect your pace. If you need time, I will not turn my feelings into pressure.
+                </div>
+              </div>
+            </div>
+
+            <div class="promise-card" data-promise="consistency" onclick="togglePromise(this)">
+              <div class="promise-inner">
+                <div class="promise-face front">
+                  <div class="icon">🔥</div>
+                  <div class="title">Consistency</div>
+                </div>
+                <div class="promise-face back">
+                  I want to show up steadily — not just when emotion is high, but when it matters quietly.
+                </div>
+              </div>
+            </div>
+
+            <div class="promise-card" data-promise="respect" onclick="togglePromise(this)">
+              <div class="promise-inner">
+                <div class="promise-face front">
+                  <div class="icon">🤍</div>
+                  <div class="title">Respect</div>
+                </div>
+                <div class="promise-face back">
+                  Your boundaries matter. Your “no” is still enough, and I will honor it without argument.
+                </div>
+              </div>
+            </div>
+
+            <div class="promise-card" data-promise="safety" onclick="togglePromise(this)">
+              <div class="promise-inner">
+                <div class="promise-face front">
+                  <div class="icon">🌿</div>
+                  <div class="title">Emotional Safety</div>
+                </div>
+                <div class="promise-face back">
+                  I want you to feel calm, seen, and respected — not chased, confused, or overwhelmed.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn" id="promiseNext" disabled onclick="goToScene('warmth')">
+              I Understand These Promises ➜
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 5: WARMTH -->
+      <section class="scene" id="warmth">
+        <div class="card">
+          <div class="eyebrow">Chapter Four</div>
+          <h2>The Warmth We Kept Apart</h2>
+
+          <p>
+            Before I ask anything serious, let this page hold a little softness.
+            Send the warmth that distance has been waiting to return.
+          </p>
+
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Connection Meter</span>
+              <span id="warmthText">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="warmthFill"></div>
+            </div>
+          </div>
+
+          <div class="warmth-grid">
+            <div class="warmth-btn" onclick="addWarmth('🤍', event)">
+              <span class="icon">🤍</span>
+              <span class="label">Heart</span>
+            </div>
+            <div class="warmth-btn" onclick="addWarmth('🤗', event)">
+              <span class="icon">🤗</span>
+              <span class="label">Hug</span>
+            </div>
+            <div class="warmth-btn" onclick="addWarmth('😊', event)">
+              <span class="icon">😊</span>
+              <span class="label">Smile</span>
+            </div>
+            <div class="warmth-btn" onclick="addWarmth('🌙', event)">
+              <span class="icon">🌙</span>
+              <span class="label">Quiet</span>
+            </div>
+            <div class="warmth-btn" onclick="addWarmth('✨', event)">
+              <span class="icon">✨</span>
+              <span class="label">Hope</span>
+            </div>
+            <div class="warmth-btn" onclick="addWarmth('💋', event)">
+              <span class="icon">💋</span>
+              <span class="label">Kiss</span>
+            </div>
+          </div>
+
+          <div class="feeling-box" id="feelingBox">
+            Start softly. I’m just grateful you’re here.
+          </div>
+
+          <div class="btn-row">
+            <button class="btn" id="warmthNext" disabled onclick="goToScene('future')">
+              Continue When Ready 💞
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 6: FUTURE MOMENT -->
+      <section class="scene" id="future">
+        <div class="card">
+          <div class="eyebrow">Chapter Five</div>
+          <h2>When We Finally Get Real Time Together</h2>
+
+          <p>
+            Since distance means our chances to be close are rare,
+            I don’t want our next real moment to be accidental.
+            I want it to be intentional.
+          </p>
+
+          <h3>If we get the chance to be close again, what should our first real moment feel like?</h3>
+
+          <div class="choice-grid">
+            <div class="date-card" onclick="selectFuture(this, 'Quiet coffee and honest conversation')">
+              <span class="emoji">☕</span>
+              <div class="title">Quiet Coffee</div>
+              <div class="desc">Soft talking, no rush, just catching up properly.</div>
+            </div>
+
+            <div class="date-card" onclick="selectFuture(this, 'Sunset walk and fresh air')">
+              <span class="emoji">🌇</span>
+              <div class="title">Sunset Walk</div>
+              <div class="desc">Walking side by side, letting the silence feel easier.</div>
+            </div>
+
+            <div class="date-card" onclick="selectFuture(this, 'Dinner with warm lighting')">
+              <span class="emoji">🍽️</span>
+              <div class="title">Meaningful Dinner</div>
+              <div class="desc">Good food, soft atmosphere, and a real conversation.</div>
+            </div>
+
+            <div class="date-card" onclick="selectFuture(this, 'Movie and snacks')">
+              <span class="emoji">🎬</span>
+              <div class="title">Movie + Snacks</div>
+              <div class="desc">Simple, comfortable, and light — the way some healing begins.</div>
+            </div>
+
+            <div class="date-card" onclick="selectFuture(this, 'A small adventure somewhere new')">
+              <span class="emoji">🌍</span>
+              <div class="title">Small Adventure</div>
+              <div class="desc">A new place, new energy, and a memory that feels different.</div>
+            </div>
+
+            <div class="date-card" onclick="selectFuture(this, 'We decide together gently')">
+              <span class="emoji">🤝</span>
+              <div class="title">Decide Together</div>
+              <div class="desc">No pressure. We plan it in a way that feels good for both of us.</div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn" id="futureNext" disabled onclick="goToScene('questions')">
+              Next: What I Want To Ask You ➜
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 7: QUESTIONS -->
+      <section class="scene" id="questions">
+        <div class="card">
+          <div class="eyebrow">Chapter Six</div>
+          <h2>Before Anything Else, I Want To Understand You Better</h2>
+
+          <p>
+            These are not traps. They are not tests.
+            They are my way of saying: I want to do this more carefully this time.
+          </p>
+
+          <div class="question-block">
+            <label for="q1">1. What part of what we had do you still want to protect?</label>
+            <textarea id="q1" placeholder="Answer only what you are comfortable sharing..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <label for="q2">2. What kind of distance or closeness feels safest for you right now?</label>
+            <textarea id="q2" placeholder="Be honest. I want to understand, not argue."></textarea>
+          </div>
+
+          <div class="question-block">
+            <label for="q3">3. What do you need from me to feel respected?</label>
+            <textarea id="q3" placeholder="Tell me what care looks like to you."></textarea>
+          </div>
+
+          <div class="question-block">
+            <label for="q4">4. What is one thing you hope I do differently this time?</label>
+            <textarea id="q4" placeholder="I’m listening."></textarea>
+          </div>
+
+          <div class="question-block">
+            <label for="q5">5. What memory of us still makes you smile?</label>
+            <textarea id="q5" placeholder="I want to know what stayed soft for you."></textarea>
+          </div>
+
+          <div class="question-block">
+            <label for="q6">6. If we try again slowly, what would make it feel genuine instead of repeated?</label>
+            <textarea id="q6" placeholder="What would make this different in a way that matters?"></textarea>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn" onclick="validateQuestionsAndContinue()">
+              Finish My Answers ➜
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 8: THE ASK -->
+      <section class="scene" id="ask">
+        <div class="card center">
+          <div class="eyebrow">Final Chapter</div>
+
+          <div class="ask-box">
+            <div class="ask-title">Mary,</div>
+            <h2 style="margin-bottom: 12px;">Will you let me try with you?</h2>
+            <p class="soft">
+              Not to rush anything.
+              Not to force the past to repeat.
+              But to give the present a chance to breathe — honestly, patiently, and without pressure.
+            </p>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn rose ask-choice" onclick="answerYes()">
+              Yes, I’m willing 💖
+            </button>
+            <button class="btn ghost ask-choice" onclick="answerTime()">
+              I need time 🌸
+            </button>
+            <button class="btn ghost ask-choice" onclick="answerNo()">
+              Not right now 🤍
+            </button>
+          </div>
+
+          <div class="status-note" id="askNote"></div>
+
+          <div class="btn-row" id="continueRow" style="display: none;">
+            <button class="btn" onclick="continueAfterResponse()">
+              Continue Respectfully ➜
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 9: FINAL PDF -->
+      <section class="scene" id="final">
+        <div class="card">
+          <div class="eyebrow">Your Response</div>
+          <h2>Thank You For Being Honest, Mary</h2>
+
+          <p>
+            Whatever your answer is, I respect it.
+            This page was never about pressure.
+            It was about showing you that you matter enough for effort, clarity, and care.
+          </p>
+
+          <p>
+            Download your response below, and if you are willing, send it back to me.
+          </p>
+
+          <div class="summary-panel">
+            <div class="summary-item">
+              <strong>Connection Score</strong>
+              <span id="previewWarmth">0%</span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Preferred Distance / Closeness</strong>
+              <span id="previewDistance">Not selected</span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Chosen First Real Moment</strong>
+              <span id="previewFuture">None selected</span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Response</strong>
+              <span id="previewResponse">Pending</span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Answer 1</strong>
+              <span id="previewQ1"></span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Answer 2</strong>
+              <span id="previewQ2"></span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Answer 3</strong>
+              <span id="previewQ3"></span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Answer 4</strong>
+              <span id="previewQ4"></span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Answer 5</strong>
+              <span id="previewQ5"></span>
+            </div>
+
+            <div class="summary-item">
+              <strong>Answer 6</strong>
+              <span id="previewQ6"></span>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn" onclick="generatePDF()">
+              Download My PDF Response 📄
+            </button>
+
+            <button class="btn ghost" onclick="fallbackPrintPDF()">
+              Print / Save as PDF 🖨️
+            </button>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3>After downloading, send it to me:</h3>
+          <div class="btn-row">
+            <a
+              class="btn ghost"
+              href="https://wa.me/27608268288?text=Hi%20T%2C%20I%20completed%20your%20honest%20invitation%20page.%20I%20am%20sending%20my%20PDF%20response%20now."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Send via WhatsApp
+            </a>
+          </div>
+
+          <p class="tiny-note center">
+            If WhatsApp opens, attach the downloaded PDF from your phone’s Downloads folder.
+          </p>
+        </div>
+      </section>
+
+      <!-- Progress Dots -->
+      <div class="dots" id="dots">
+        <div class="dot-progress active" data-scene="intro"></div>
+        <div class="dot-progress" data-scene="truth"></div>
+        <div class="dot-progress" data-scene="distance"></div>
+        <div class="dot-progress" data-scene="promises"></div>
+        <div class="dot-progress" data-scene="warmth"></div>
+        <div class="dot-progress" data-scene="future"></div>
+        <div class="dot-progress" data-scene="questions"></div>
+        <div class="dot-progress" data-scene="ask"></div>
+        <div class="dot-progress" data-scene="final"></div>
+      </div>
+
     </div>
+  </div>
+
+  <!-- Mobile Instruction Hint -->
+  <div id="mobileHint" class="mobile-hint" aria-live="polite">
+    👆 Tap the wax seal to open the letter
+  </div>
+
+  <script>
+    /* =====================================================
+       STATE
+    ===================================================== */
+    const state = {
+      envelopeOpened: false,
+      distancePreference: null,
+      promises: new Set(),
+      warmth: 0,
+      futureMoment: null,
+      response: "Pending"
+    };
+
+    const sceneHints = {
+      intro: "👆 Tap the wax seal to open the letter",
+      truth: "👇 Tap Continue when you’re ready",
+      distance: "👆 Tap the option that feels safest to you",
+      promises: "👆 Tap each promise card to reveal it",
+      warmth: "👆 Tap the icons to send warmth",
+      future: "👆 Tap the moment that feels right",
+      questions: "✍️ Type your answers, then tap Finish",
+      ask: "👆 Tap the answer that feels true",
+      final: "📄 Tap Download PDF, or use Print / Save as PDF, then send via WhatsApp"
+    };
+
+    const distanceProfiles = {
+      consistent: {
+        label: "Consistent but calm",
+        you: 38,
+        mary: 62,
+        center: "Steady closeness",
+        message: "I can show up regularly without turning it into pressure."
+      },
+      quality: {
+        label: "Quality over quantity",
+        you: 30,
+        mary: 70,
+        center: "Deep, not constant",
+        message: "Less noise, more meaning. I’d rather be real than frequent."
+      },
+      slow: {
+        label: "Slow and careful",
+        you: 44,
+        mary: 56,
+        center: "Rebuilding gently",
+        message: "We can take the pace that feels safe for you."
+      },
+      boundaries: {
+        label: "Clear boundaries",
+        you: 34,
+        mary: 66,
+        center: "Respectful space",
+        message: "No mixed signals. No games. Just clarity."
+      },
+      visits: {
+        label: "Make visits count",
+        you: 48,
+        mary: 52,
+        center: "Presence over distance",
+        message: "When we finally share space, I want it to feel calm and intentional."
+      },
+      youLead: {
+        label: "You lead",
+        you: 40,
+        mary: 60,
+        center: "Your comfort first",
+        message: "Tell me what feels right, and I will listen properly."
+      }
+    };
+
+    const warmthMessages = [
+      "Thank you for still being soft with me.",
+      "I don’t take this warmth for granted.",
+      "This feels like honesty, not performance.",
+      "I miss the easy parts of us.",
+      "I’m not trying to rush you.",
+      "I’d rather earn trust than demand it.",
+      "Your comfort matters more than my ego.",
+      "This is why I keep choosing clarity.",
+      "If we heal, it starts with small truths.",
+      "I’m grateful you’re still willing to feel."
+    ];
+
+    /* =====================================================
+       MOBILE HINT
+    ===================================================== */
+    function setMobileHint(text) {
+      const hint = document.getElementById("mobileHint");
+      if (hint) hint.textContent = text;
+    }
+
+    function updateMobileHint(sceneId) {
+      setMobileHint(sceneHints[sceneId] || "");
+    }
+
+    /* =====================================================
+       SCENE NAVIGATION
+    ===================================================== */
+    function goToScene(sceneId) {
+      document.querySelectorAll(".scene").forEach(scene => {
+        scene.classList.remove("active");
+      });
+
+      const target = document.getElementById(sceneId);
+      if (target) target.classList.add("active");
+
+      document.querySelectorAll(".dot-progress").forEach(dot => {
+        dot.classList.toggle("active", dot.dataset.scene === sceneId);
+      });
+
+      updateMobileHint(sceneId);
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (sceneId === "final") {
+        updateFinalPreview();
+      }
+    }
+
+    /* =====================================================
+       ENVELOPE
+    ===================================================== */
+    function openEnvelope() {
+      if (state.envelopeOpened) return;
+      state.envelopeOpened = true;
+
+      const envelope = document.getElementById("envelope");
+      envelope.classList.add("opened");
+
+      setTimeout(() => {
+        goToScene("truth");
+      }, 1500);
+    }
+
+    /* =====================================================
+       DISTANCE SELECTION + ANIMATION
+    ===================================================== */
+    function selectDistance(card, key) {
+      document.querySelectorAll(".option-card").forEach(c => c.classList.remove("selected"));
+      card.classList.add("selected");
+
+      const profile = distanceProfiles[key];
+      state.distancePreference = profile.label;
+
+      document.getElementById("youDot").style.left = profile.you + "%";
+      document.getElementById("maryDot").style.left = profile.mary + "%";
+      document.getElementById("youLabel").style.left = profile.you + "%";
+      document.getElementById("maryLabel").style.left = profile.mary + "%";
+
+      const line = document.getElementById("distanceLine");
+      line.style.left = profile.you + "%";
+      line.style.right = (100 - profile.mary) + "%";
+
+      document.getElementById("milesText").textContent = profile.center;
+      document.getElementById("distanceMessage").textContent = profile.message;
+
+      document.getElementById("distanceNext").disabled = false;
+      setMobileHint("👇 Tap “Continue With This Understanding” when you’re ready.");
+    }
+
+    /* =====================================================
+       PROMISE CARDS
+    ===================================================== */
+    function togglePromise(card) {
+      if (card.classList.contains("revealed")) return;
+
+      card.classList.add("revealed");
+      state.promises.add(card.dataset.promise);
+
+      const remaining = 6 - state.promises.size;
+
+      if (remaining > 0) {
+        setMobileHint(
+          `👆 Tap ${remaining} more promise card${remaining === 1 ? "" : "s"} to continue.`
+        );
+      } else {
+        document.getElementById("promiseNext").disabled = false;
+        setMobileHint("👇 Tap “I Understand These Promises” to continue.");
+      }
+    }
+
+    /* =====================================================
+       WARMTH METER
+    ===================================================== */
+    function addWarmth(emoji, event) {
+      if (state.warmth >= 100) return;
+
+      const increment = Math.floor(Math.random() * 9) + 7;
+      state.warmth = Math.min(100, state.warmth + increment);
+
+      document.getElementById("warmthText").innerText = state.warmth + "%";
+      document.getElementById("warmthFill").style.width = state.warmth + "%";
+
+      spawnFloatingEmoji(emoji, event);
+      showWarmthMessage();
+
+      if (state.warmth >= 100) {
+        document.getElementById("warmthNext").disabled = false;
+        document.getElementById("feelingBox").innerText =
+          "Connection complete. Now I’m officially hopeful.";
+        setMobileHint("👇 Tap “Continue When Ready” to move on.");
+      } else {
+        setMobileHint("👆 Tap the icons until the Connection Meter reaches 100%.");
+      }
+    }
+
+    function showWarmthMessage() {
+      const box = document.getElementById("feelingBox");
+      const random = warmthMessages[Math.floor(Math.random() * warmthMessages.length)];
+      box.innerText = random;
+    }
+
+    function spawnFloatingEmoji(emoji, event) {
+      const el = document.createElement("div");
+      el.className = "floating-emoji";
+      el.innerText = emoji;
+
+      let x = event && event.clientX ? event.clientX : null;
+      let y = event && event.clientY ? event.clientY : null;
+
+      if (!x || !y) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + rect.height / 2;
+      }
+
+      el.style.left = x + "px";
+      el.style.top = y + "px";
+
+      document.body.appendChild(el);
+
+      setTimeout(() => {
+        el.remove();
+      }, 1800);
+    }
+
+    /* =====================================================
+       FUTURE MOMENT CHOICE
+    ===================================================== */
+    function selectFuture(cardElement, value) {
+      state.futureMoment = value;
+
+      document.querySelectorAll(".date-card").forEach(card => {
+        card.classList.remove("selected");
+      });
+
+      cardElement.classList.add("selected");
+      document.getElementById("futureNext").disabled = false;
+
+      setMobileHint("👇 Tap “Next: What I Want To Ask You” when you’re ready.");
+    }
+
+    /* =====================================================
+       QUESTION VALIDATION
+    ===================================================== */
+    function validateQuestionsAndContinue() {
+      const fields = [
+        document.getElementById("q1"),
+        document.getElementById("q2"),
+        document.getElementById("q3"),
+        document.getElementById("q4"),
+        document.getElementById("q5"),
+        document.getElementById("q6")
+      ];
+
+      const emptyField = fields.find(field => !field.value.trim());
+
+      if (emptyField) {
+        emptyField.focus();
+        setMobileHint("✍️ Please answer all six questions before continuing.");
+        alert("Please answer all six questions before continuing.");
+        return;
+      }
+
+      goToScene("ask");
+    }
+
+    /* =====================================================
+       RESPONSE OPTIONS
+    ===================================================== */
+    function lockAskChoices() {
+      document.querySelectorAll(".ask-choice").forEach(btn => {
+        btn.disabled = true;
+      });
+    }
+
+    function answerYes() {
+      lockAskChoices();
+      state.response = "Yes - she is willing to try with honesty and care.";
+
+      const note = document.getElementById("askNote");
+      note.style.display = "block";
+      note.innerHTML =
+        "Mary… thank you for choosing honesty over fear. I don’t take that lightly. I’ll move with care.";
+
+      launchFireworks();
+
+      setTimeout(() => {
+        goToScene("final");
+      }, 2400);
+    }
+
+    function answerTime() {
+      lockAskChoices();
+      state.response = "She needs time and clarity before deciding.";
+
+      const note = document.getElementById("askNote");
+      note.style.display = "block";
+      note.innerHTML =
+        "I understand. Take the space you need. My answer is still the same: I’m willing to be patient and honest.";
+
+      document.getElementById("continueRow").style.display = "flex";
+      setMobileHint("👇 Tap “Continue Respectfully” when you’re ready.");
+    }
+
+    function answerNo() {
+      lockAskChoices();
+      state.response = "She chose not to pursue this right now.";
+
+      const note = document.getElementById("askNote");
+      note.style.display = "block";
+      note.innerHTML =
+        "I respect that. Thank you for being truthful. No pressure, no guilt — just gratitude for the honesty.";
+
+      document.getElementById("continueRow").style.display = "flex";
+      setMobileHint("👇 Tap “Continue Respectfully” when you’re ready.");
+    }
+
+    function continueAfterResponse() {
+      goToScene("final");
+    }
+
+    /* =====================================================
+       FINAL PREVIEW
+    ===================================================== */
+    function updateFinalPreview() {
+      document.getElementById("previewWarmth").innerText = state.warmth + "%";
+      document.getElementById("previewDistance").innerText = state.distancePreference || "Not selected";
+      document.getElementById("previewFuture").innerText = state.futureMoment || "None selected";
+      document.getElementById("previewResponse").innerText = state.response;
+
+      document.getElementById("previewQ1").innerText = document.getElementById("q1").value;
+      document.getElementById("previewQ2").innerText = document.getElementById("q2").value;
+      document.getElementById("previewQ3").innerText = document.getElementById("q3").value;
+      document.getElementById("previewQ4").innerText = document.getElementById("q4").value;
+      document.getElementById("previewQ5").innerText = document.getElementById("q5").value;
+      document.getElementById("previewQ6").innerText = document.getElementById("q6").value;
+    }
+
+    /* =====================================================
+       PDF DATA
+    ===================================================== */
+    function getPdfData() {
+      return {
+        date: new Date().toLocaleDateString("en-ZA", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        }),
+        warmth: state.warmth + "%",
+        distance: state.distancePreference || "Not selected",
+        future: state.futureMoment || "None selected",
+        response: state.response,
+        answers: [
+          {
+            q: "What part of what we had do you still want to protect?",
+            a: document.getElementById("q1").value.trim()
+          },
+          {
+            q: "What kind of distance or closeness feels safest for you right now?",
+            a: document.getElementById("q2").value.trim()
+          },
+          {
+            q: "What do you need from me to feel respected?",
+            a: document.getElementById("q3").value.trim()
+          },
+          {
+            q: "What is one thing you hope I do differently this time?",
+            a: document.getElementById("q4").value.trim()
+          },
+          {
+            q: "What memory of us still makes you smile?",
+            a: document.getElementById("q5").value.trim()
+          },
+          {
+            q: "If we try again slowly, what would make it feel genuine instead of repeated?",
+            a: document.getElementById("q6").value.trim()
+          }
+        ]
+      };
+    }
+
+    /* =====================================================
+       REAL TEXT PDF GENERATION USING JSPDF
+    ===================================================== */
+    async function generatePDF() {
+      const buttons = document.querySelectorAll("#final .btn-row button");
+      buttons.forEach(btn => btn.disabled = true);
+      setMobileHint("⏳ Generating your PDF...");
+
+      try {
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+          throw new Error("PDF library not loaded.");
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait"
+        });
+
+        const data = getPdfData();
+
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const margin = 18;
+        const contentWidth = pageWidth - (margin * 2);
+        let y = margin + 10;
+
+        function ensureSpace(spaceNeeded) {
+          if (y + spaceNeeded > pageHeight - margin) {
+            doc.addPage();
+            y = margin + 6;
+          }
+        }
+
+        function writeText(text, options = {}) {
+          const {
+            font = "helvetica",
+            style = "normal",
+            size = 10.5,
+            color = [30, 30, 30],
+            align = "left",
+            x = margin,
+            maxWidth = contentWidth,
+            lineHeight = 5.4,
+            spaceAfter = 4
+          } = options;
+
+          const lines = doc.splitTextToSize(String(text || ""), maxWidth);
+          doc.setFont(font, style);
+          doc.setFontSize(size);
+          doc.setTextColor(color[0], color[1], color[2]);
+
+          lines.forEach(line => {
+            ensureSpace(lineHeight + 2);
+            doc.text(line, align === "center" ? pageWidth / 2 : x, y, { align });
+            y += lineHeight;
+          });
+
+          y += spaceAfter;
+        }
+
+        function addSectionTitle(title) {
+          ensureSpace(16);
+          doc.setFont("times", "normal");
+          doc.setFontSize(16);
+          doc.setTextColor(201, 24, 74);
+          doc.text(title, margin, y);
+          y += 8;
+        }
+
+        // Header
+        doc.setFont("times", "normal");
+        doc.setFontSize(28);
+        doc.setTextColor(201, 24, 74);
+        doc.text("Mary's Honest Response", pageWidth / 2, y, { align: "center" });
+        y += 9;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        doc.text("Created by T Mogale", pageWidth / 2, y, { align: "center" });
+        y += 5;
+        doc.text(data.date, pageWidth / 2, y, { align: "center" });
+        y += 8;
+
+        doc.setDrawColor(212, 175, 55);
+        doc.setLineWidth(0.5);
+        doc.line(margin, y, pageWidth - margin, y);
+        y += 10;
+
+        // Summary
+        addSectionTitle("Response Summary");
+        writeText(`Connection Score: ${data.warmth}`);
+        writeText(`Preferred Distance / Closeness: ${data.distance}`);
+        writeText(`Chosen First Real Moment: ${data.future}`);
+        writeText(`Mary's Response: ${data.response}`);
+
+        // Answers
+        addSectionTitle("Mary's Answers");
+
+        data.answers.forEach((item, index) => {
+          ensureSpace(20);
+
+          // Question
+          const questionLines = doc.splitTextToSize(`${index + 1}. ${item.q}`, contentWidth);
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(10.5);
+          doc.setTextColor(201, 24, 74);
+
+          questionLines.forEach(line => {
+            ensureSpace(6);
+            doc.text(line, margin, y);
+            y += 5.6;
+          });
+
+          y += 2;
+
+          // Answer box
+          const answerText = item.a || "No answer provided.";
+          const answerLines = doc.splitTextToSize(answerText, contentWidth - 8);
+          const boxHeight = (answerLines.length * 5.4) + 8;
+
+          ensureSpace(boxHeight + 10);
+
+          doc.setFillColor(250, 250, 250);
+          doc.setDrawColor(230, 230, 230);
+          doc.setLineWidth(0.2);
+          doc.roundedRect(margin, y, contentWidth, boxHeight, 2, 2, "FD");
+
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(10.5);
+          doc.setTextColor(40, 40, 40);
+
+          let textY = y + 5.5;
+          answerLines.forEach(line => {
+            doc.text(line, margin + 4, textY);
+            textY += 5.4;
+          });
+
+          y += boxHeight + 6;
+        });
+
+        // Footer quote
+        ensureSpace(30);
+        doc.setFont("times", "italic");
+        doc.setFontSize(11);
+        doc.setTextColor(100, 100, 100);
+
+        const quote = '"This was not built to pressure you. It was built to show you that you are still worth honesty, effort, and care."';
+        const quoteLines = doc.splitTextToSize(quote, contentWidth);
+
+        quoteLines.forEach(line => {
+          ensureSpace(6);
+          doc.text(line, pageWidth / 2, y, { align: "center" });
+          y += 6;
+        });
+
+        y += 10;
+
+        // Signatures
+        ensureSpace(24);
+        doc.setDrawColor(120, 120, 120);
+        doc.setLineWidth(0.3);
+
+        const signatureY = y + 10;
+        doc.line(margin, signatureY, margin + 65, signatureY);
+        doc.line(pageWidth - margin - 65, signatureY, pageWidth - margin, signatureY);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9.5);
+        doc.setTextColor(80, 80, 80);
+
+        doc.text("Mary's Signature", margin + 32.5, signatureY + 5, { align: "center" });
+        doc.text("T Mogale's Heart", pageWidth - margin - 32.5, signatureY + 5, { align: "center" });
+
+        // Page numbers
+        const pageCount = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+          doc.setPage(i);
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(8.5);
+          doc.setTextColor(160, 160, 160);
+          doc.text(`Page ${i} of ${pageCount}`, pageWidth / 2, pageHeight - 10, { align: "center" });
+        }
+
+        await doc.save("Mary_Honest_Response.pdf");
+
+        setMobileHint("✅ PDF downloaded. Now tap Send via WhatsApp and attach the file.");
+        alert("Your PDF response has been downloaded. Now send it to T Mogale.");
+      } catch (error) {
+        console.error("PDF generation failed:", error);
+        setMobileHint("❌ Direct PDF failed. Use Print / Save as PDF.");
+        alert("Direct PDF failed. Please use the Print / Save as PDF button.");
+      } finally {
+        buttons.forEach(btn => btn.disabled = false);
+      }
+    }
+
+    /* =====================================================
+       FALLBACK PRINT / SAVE AS PDF
+    ===================================================== */
+    function fallbackPrintPDF() {
+      const data = getPdfData();
+      const printWindow = window.open("", "_blank", "noopener,noreferrer");
+
+      if (!printWindow) {
+        alert("Please allow pop-ups for this page, then try again.");
+        return;
+      }
+
+      const escapeHtml = (str) =>
+        String(str || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+
+      const answerBlocks = data.answers.map((item, index) => `
+        <div class="qa">
+          <div class="q">${index + 1}. ${escapeHtml(item.q)}</div>
+          <div class="a">${escapeHtml(item.a || "No answer provided.")}</div>
+        </div>
+      `).join("");
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Mary's Honest Response</title>
+          <style>
+            @page {
+              size: A4;
+              margin: 14mm;
+            }
+
+            body {
+              margin: 0;
+              background: #ffffff;
+              color: #222222;
+              font-family: Arial, Helvetica, sans-serif;
+              line-height: 1.6;
+            }
+
+            .sheet {
+              width: 182mm;
+              margin: 0 auto;
+              padding: 8mm 0;
+            }
+
+            .title {
+              font-family: Georgia, "Times New Roman", serif;
+              font-size: 34px;
+              color: #c9184a;
+              text-align: center;
+              margin: 0 0 8px 0;
+            }
+
+            .sub {
+              text-align: center;
+              color: #666666;
+              font-size: 13px;
+              margin: 4px 0;
+            }
+
+            .rule {
+              border: none;
+              border-top: 1px solid #d4af37;
+              margin: 16px 0;
+            }
+
+            .section {
+              font-family: Georgia, "Times New Roman", serif;
+              color: #c9184a;
+              font-size: 20px;
+              margin: 18px 0 10px 0;
+            }
+
+            .line {
+              margin-bottom: 8px;
+              font-size: 13px;
+            }
+
+            .qa {
+              margin-bottom: 16px;
+              break-inside: avoid;
+              page-break-inside: avoid;
+            }
+
+            .q {
+              font-weight: bold;
+              color: #c9184a;
+              margin-bottom: 6px;
+              font-size: 13px;
+            }
+
+            .a {
+              background: #fafafa;
+              border-left: 4px solid #c9184a;
+              padding: 10px;
+              white-space: pre-wrap;
+              word-break: break-word;
+              font-size: 13px;
+            }
+
+            .footer {
+              margin-top: 24px;
+              text-align: center;
+              font-style: italic;
+              color: #777777;
+              font-size: 13px;
+            }
+
+            .signatures {
+              margin-top: 34px;
+              display: flex;
+              justify-content: space-between;
+              gap: 20px;
+              font-size: 12px;
+              color: #444444;
+            }
+
+            .sig {
+              flex: 1;
+              border-top: 1px solid #999999;
+              padding-top: 6px;
+              text-align: center;
+            }
+
+            @media print {
+              body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="sheet">
+            <h1 class="title">Mary's Honest Response</h1>
+            <div class="sub">Created by T Mogale</div>
+            <div class="sub">${escapeHtml(data.date)}</div>
+
+            <hr class="rule" />
+
+            <div class="section">Response Summary</div>
+            <div class="line"><strong>Connection Score:</strong> ${escapeHtml(data.warmth)}</div>
+            <div class="line"><strong>Preferred Distance / Closeness:</strong> ${escapeHtml(data.distance)}</div>
+            <div class="line"><strong>Chosen First Real Moment:</strong> ${escapeHtml(data.future)}</div>
+            <div class="line"><strong>Mary's Response:</strong> ${escapeHtml(data.response)}</div>
+
+            <hr class="rule" />
+
+            <div class="section">Mary's Answers</div>
+            ${answerBlocks}
+
+            <div class="footer">
+              "This was not built to pressure you. It was built to show you that you are still worth honesty, effort, and care."
+            </div>
+
+            <div class="signatures">
+              <div class="sig">Mary's Signature</div>
+              <div class="sig">T Mogale's Heart</div>
+            </div>
+          </div>
+        </body>
+        </html>
+      `);
+
+      printWindow.document.close();
+      printWindow.focus();
+
+      setMobileHint("🖨️ In the print menu, choose Save as PDF, then send it via WhatsApp.");
+
+      setTimeout(() => {
+        printWindow.print();
+      }, 700);
+    }
+
+    /* =====================================================
+       AMBIENT PARTICLES
+    ===================================================== */
+    const ambientCanvas = document.getElementById("ambient");
+    const ambientCtx = ambientCanvas.getContext("2d");
+    let particles = [];
+
+    function resizeAmbient() {
+      ambientCanvas.width = window.innerWidth;
+      ambientCanvas.height = window.innerHeight;
+      initParticles();
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.min(90, Math.floor((ambientCanvas.width * ambientCanvas.height) / 16000));
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * ambientCanvas.width,
+          y: Math.random() * ambientCanvas.height,
+          r: Math.random() * 2.2 + 0.5,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: -(Math.random() * 0.35 + 0.08),
+          alpha: Math.random() * 0.5 + 0.15,
+          color: Math.random() > 0.5 ? "212,175,55" : "255,143,163"
+        });
+      }
+    }
+
+    function drawAmbient() {
+      ambientCtx.clearRect(0, 0, ambientCanvas.width, ambientCanvas.height);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.y < -10) {
+          p.y = ambientCanvas.height + 10;
+          p.x = Math.random() * ambientCanvas.width;
+        }
+
+        if (p.x < -10) p.x = ambientCanvas.width + 10;
+        if (p.x > ambientCanvas.width + 10) p.x = -10;
+
+        ambientCtx.beginPath();
+        ambientCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ambientCtx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+        ambientCtx.shadowBlur = 10;
+        ambientCtx.shadowColor = `rgba(${p.color}, 0.4)`;
+        ambientCtx.fill();
+      });
+
+      requestAnimationFrame(drawAmbient);
+    }
+
+    window.addEventListener("resize", resizeAmbient);
+    resizeAmbient();
+    drawAmbient();
+
+    /* =====================================================
+       FIREWORKS
+    ===================================================== */
+    const fxCanvas = document.getElementById("fx");
+    const fxCtx = fxCanvas.getContext("2d");
+    let fxParticles = [];
+    let fxAnimating = false;
+
+    function resizeFX() {
+      fxCanvas.width = window.innerWidth;
+      fxCanvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeFX);
+    resizeFX();
+
+    function launchFireworks() {
+      const colors = ["#d4af37", "#ff8fa3", "#dff7ff", "#ffffff", "#9d4edd"];
+
+      for (let burst = 0; burst < 10; burst++) {
+        setTimeout(() => {
+          const x = Math.random() * fxCanvas.width;
+          const y = Math.random() * (fxCanvas.height * 0.6);
+          const color = colors[Math.floor(Math.random() * colors.length)];
+
+          for (let i = 0; i < 80; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 5.5 + 2;
+
+            fxParticles.push({
+              x,
+              y,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              life: 1,
+              decay: Math.random() * 0.02 + 0.008,
+              size: Math.random() * 3 + 1.5,
+              color
+            });
+          }
+        }, burst * 220);
+      }
+
+      if (!fxAnimating) {
+        fxAnimating = true;
+        animateFX();
+      }
+    }
+
+    function animateFX() {
+      fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+
+      for (let i = fxParticles.length - 1; i >= 0; i--) {
+        const p = fxParticles[i];
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.06;
+        p.life -= p.decay;
+
+        fxCtx.globalAlpha = Math.max(p.life, 0);
+        fxCtx.beginPath();
+        fxCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        fxCtx.fillStyle = p.color;
+        fxCtx.shadowBlur = 14;
+        fxCtx.shadowColor = p.color;
+        fxCtx.fill();
+
+        if (p.life <= 0) {
+          fxParticles.splice(i, 1);
+        }
+      }
+
+      fxCtx.globalAlpha = 1;
+
+      if (fxParticles.length > 0) {
+        requestAnimationFrame(animateFX);
+      } else {
+        fxAnimating = false;
+        fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+      }
+    }
+
+    /* =====================================================
+       INITIAL HINT
+    ===================================================== */
+    updateMobileHint("intro");
+  </script>
 </body>
 </html>
